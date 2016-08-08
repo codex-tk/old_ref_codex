@@ -18,6 +18,9 @@ endif()
 
 add_executable( codex.test
 	test_codex.cpp
+	test_diag.cpp
+  test_chrono.cpp
+  test_buffer.cpp
 )
 
 target_link_libraries( codex.test

@@ -68,6 +68,8 @@ class server
       : acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
       socket_(io_service)
   {
+    boost::asio::socket_base::reuse_address opt(true);
+    acceptor_.set_option( opt );
     do_accept();
   }
 

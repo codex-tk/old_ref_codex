@@ -37,11 +37,20 @@ endif()
 set( HEADERS
     include/codex/predefs.hpp
     include/codex/codex.hpp
+    include/codex/diag/error.hpp
+    include/codex/allocator.hpp
+    include/codex/buffer/ctrl_blk.hpp
+    include/codex/buffer/shared_blk.hpp
+    include/codex/time/convenience.hpp
 )
 
 set( SRCS
     src/codex.cpp
-
+    src/diag/error.cpp
+    src/allocator.cpp
+    src/buffer/ctrl_blk.cpp
+    src/buffer/shared_blk.cpp
+    src/time/convenience.cpp
     )
 
   add_library( codex STATIC ${HEADERS} ${SRCS} )
