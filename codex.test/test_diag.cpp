@@ -21,3 +21,9 @@ TEST( diag , error_condition ) {
   // equivalent( std::error_code , int cond ) 
   ASSERT_EQ( ec2 ,std::make_error_code( std::errc::invalid_argument ));
 }
+
+#include <boost/asio.hpp>
+
+TEST(asio, io_service) {
+  boost::asio::io_service svc;
+}

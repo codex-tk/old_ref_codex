@@ -13,6 +13,7 @@
 #include <utility>
 #include <boost/asio.hpp>
 
+
 using boost::asio::ip::tcp;
 
 class session
@@ -96,16 +97,17 @@ int main(int argc, char* argv[])
 {
   try
   {
+    /*
     if (argc != 2)
     {
       std::cerr << "Usage: async_tcp_echo_server <port>\n";
       return 1;
-    }
+    }*/
 
     boost::asio::io_service io_service;
 
-    server s(io_service, std::atoi(argv[1]));
-
+    //server s(io_service, std::atoi(argv[1]));
+    server s(io_service,  7543 );
     io_service.run();
   }
   catch (std::exception& e)

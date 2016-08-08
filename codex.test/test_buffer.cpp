@@ -14,6 +14,7 @@ TEST( buffer , ctrl_blk ){
 
   int test_value = 0;
   codex::buffer::ctrl_blk* blkwithdeleter = codex::buffer::ctrl_blk::make_blk( nullptr , 0  , [&](void* ptr) {
+       (void*)ptr;
         test_value = 1;
       });
 

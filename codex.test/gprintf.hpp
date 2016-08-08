@@ -18,7 +18,7 @@ namespace testing
 }
 #define gprintf(...)  do {\
   testing::internal::ColoredPrintf(\
-      testing::internal::COLOR_RED, "[   USER   ] "); \
+      testing::internal::COLOR_YELLOW, "[   USER   ] "); \
   testing::internal::ColoredPrintf(\
       testing::internal::COLOR_DEFAULT, __VA_ARGS__); } while(0)
 

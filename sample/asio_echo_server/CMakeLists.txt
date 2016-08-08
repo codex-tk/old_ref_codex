@@ -1,16 +1,20 @@
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
 
-
-include_directories( /usr/local/include )
-link_directories( /usr/local/lib )
+project( sample.workspace )
 
 if(MSVC)
 
+	set(BOOST_ROOT "D:/tk/work/local/boost_1_61_0")
+	set(Boost_USE_STATIC_LIBS   	ON)
+	set(Boost_USE_MULTITHREADED 	ON)
+	set(Boost_USE_STATIC_RUNTIME  ON)
+
 	add_compile_options("/wd4819")
 	add_compile_options("/wd4127")
+
 	foreach (flag_var
 				 CMAKE_CXX_FLAGS
-				 CMAKE_CXX_FLAGS_DEBUG
+ 				 CMAKE_CXX_FLAGS_DEBUG
 				 CMAKE_CXX_FLAGS_RELEASE
 				 CMAKE_CXX_FLAGS_MINSIZEREL
 				 CMAKE_CXX_FLAGS_RELWITHDEBINFO)
@@ -21,11 +25,18 @@ if(MSVC)
 	string(REGEX REPLACE "/O2" "Od"
 			CMAKE_CXX_FLAGS_DEBUG
 			"${CMAKE_CXX_FLAGS_DEBUG}")
+
+
 else()
+	set(BOOST_ROOT "D:/tk/work/local/boost_1_61_0")
 	add_definitions( -Wall -std=c++11 -o2 -g -ggdb )
 endif()
 
-project( asio_echo_server )
+find_package (Boost 1.61.0 REQUIRED COMPONENTS system date_time regex )
+
+if (Boost_FOUND)
+  include_directories (SYSTEM ${Boost_INCLUDE_DIR})
+endif()
 
 if( MSVC )
 	add_definitions (/D _CRT_SECURE_NO_WARNINGS)
@@ -38,10 +49,10 @@ else()
 	endif()
 endif()
 
-add_executable( asio_echo_server  
+add_executable( asio_echo_server
   main.cpp
 )
 
 target_link_libraries( asio_echo_server
-  boost_system
+  ${Boost_LIBRARIES}
   )

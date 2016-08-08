@@ -45,6 +45,9 @@ namespace codex { namespace buffer {
         , _deleter(std::forward<Deleter>(d))
       {
       }
+      virtual ~ctrl_blk0(void) {
+
+      }
       virtual void _on_destroy( void ) {
         _deleter( ptr() );
         delete this;
