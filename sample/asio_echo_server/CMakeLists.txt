@@ -26,9 +26,8 @@ if(MSVC)
 			CMAKE_CXX_FLAGS_DEBUG
 			"${CMAKE_CXX_FLAGS_DEBUG}")
 
-
+	add_definitions (/D _CRT_SECURE_NO_WARNINGS)
 else()
-	set(BOOST_ROOT "D:/tk/work/local/boost_1_61_0")
 	add_definitions( -Wall -std=c++11 -o2 -g -ggdb )
 endif()
 
@@ -36,17 +35,6 @@ find_package (Boost 1.61.0 REQUIRED COMPONENTS system date_time regex )
 
 if (Boost_FOUND)
   include_directories (SYSTEM ${Boost_INCLUDE_DIR})
-endif()
-
-if( MSVC )
-	add_definitions (/D _CRT_SECURE_NO_WARNINGS)
-else()
-	add_definitions( -Wall -std=c++11 -o2 -g -ggdb )
-	if( APPLE )
-
-	else()
-
-	endif()
 endif()
 
 add_executable( asio_echo_server
