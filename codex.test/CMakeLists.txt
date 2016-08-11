@@ -33,6 +33,7 @@ add_executable( codex.test
 	test_diag.cpp
   test_chrono.cpp
   test_buffer.cpp
+  test_handler.cpp
 )
 
 target_link_libraries( codex.test

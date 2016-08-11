@@ -18,6 +18,8 @@ namespace codex { namespace time {
     public:
       systemtime( void );
       systemtime( const std::chrono::system_clock::time_point& tp );
+
+      std::chrono::system_clock::time_point to_time_point( void ) const;
     public:
 #if !defined( __codex_win32__ )
       uint16_t wYear;

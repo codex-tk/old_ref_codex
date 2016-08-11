@@ -4,7 +4,7 @@
 #include <codex/time/convenience.hpp>
 #include "gprintf.hpp"
 
-TEST( chrono , now ){
+TEST( chrono , conv ){
   std::chrono::system_clock::time_point tp = 
     std::chrono::system_clock::now();
   std::time_t epoch = std::chrono::system_clock::to_time_t(tp);
@@ -21,6 +21,17 @@ TEST( chrono , now ){
      st.wHour   , 
      st.wMinute , 
      st.wSecond );
+
+  std::chrono::system_clock::time_point ntp = st.to_time_point();
+  codex::time::systemtime nst( ntp );
+  gprintf( "%d/%d/%d %d:%d:%d\n" , 
+     nst.wYear   , 
+     nst.wMonth  , 
+     nst.wDay    , 
+     nst.wHour   , 
+     nst.wMinute , 
+     nst.wSecond );
+
 }
 
 TEST( time , convenience ) {

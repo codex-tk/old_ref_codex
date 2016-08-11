@@ -8,6 +8,7 @@ namespace codex { namespace time {
   systemtime::systemtime( void ){
     memset( this , 0x00 , sizeof(*this));
   }
+
   systemtime::systemtime( const std::chrono::system_clock::time_point& tp ){
     std::time_t tick = std::chrono::system_clock::to_time_t(tp);
     struct tm tm_date;
@@ -22,6 +23,18 @@ namespace codex { namespace time {
         tp.time_since_epoch()).count() % 1000 ;    
   }
   
+  std::chrono::system_clock::time_point systemtime::to_time_point( void ) const{
+    std::time_t val = codex::time::days_between_year( 1970 , wYear );
+    val += codex::time::days_between_month( wYear , 1 , wMonth );
+    val += ( wDay - 1 );
+    val *= ( 24 * 60 * 60 );
+    val += ( wHour * 60 * 60 );
+    val += ( wMinute * 60 );
+    val += ( wSecond );
+    std::chrono::system_clock::time_point tp = 
+      std::chrono::system_clock::from_time_t( val );
+    return tp + std::chrono::milliseconds( wMilliseconds );
+  }
   namespace {
     static const int MONTH_TABLE [2][12] = {
       { 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 } , // common year
