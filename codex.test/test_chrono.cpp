@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <chrono>
 #include <ctime>
-#include <codex/time/convenience.hpp>
+#include <codex/convenience/time.hpp>
 #include "gprintf.hpp"
 
 TEST( chrono , conv ){

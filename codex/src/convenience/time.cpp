@@ -1,4 +1,4 @@
-#include <codex/time/convenience.hpp>
+#include <codex/convenience/time.hpp>
 
 #include <chrono>
 #include <ctime>
@@ -24,17 +24,20 @@ namespace codex { namespace time {
   }
   
   std::chrono::system_clock::time_point systemtime::to_time_point( void ) const{
-    std::time_t val = codex::time::days_between_year( 1970 , wYear );
-    val += codex::time::days_between_month( wYear , 1 , wMonth );
-    val += ( wDay - 1 );
-    val *= ( 24 * 60 * 60 );
-    val += ( wHour * 60 * 60 );
-    val += ( wMinute * 60 );
+    constexpr int seconds_in_minute = 60;
+    constexpr int seconds_in_hour = 60 * seconds_in_minute;
+    constexpr int seconds_in_day = 24 * seconds_in_hour;
+    std::time_t val = 0;
+    val += ( days_between_year( 1970 , wYear ) * seconds_in_day );
+    val += ( days_between_month( wYear , 1 , wMonth ) * seconds_in_day );
+    val += (( wDay - 1 ) * seconds_in_day );
+    val += ( wHour   * seconds_in_hour );
+    val += ( wMinute * seconds_in_minute );
     val += ( wSecond );
-    std::chrono::system_clock::time_point tp = 
-      std::chrono::system_clock::from_time_t( val );
-    return tp + std::chrono::milliseconds( wMilliseconds );
+    return std::chrono::system_clock::from_time_t( val ) 
+      + std::chrono::milliseconds( wMilliseconds );
   }
+
   namespace {
     static const int MONTH_TABLE [2][12] = {
       { 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 } , // common year

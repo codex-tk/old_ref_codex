@@ -7,7 +7,6 @@
 
 namespace codex {
 
-
   /*!
    * variadic template sample code
    * use std::function< Signature > instead of codex::handler< Signature >
@@ -65,7 +64,6 @@ namespace codex {
         return R();
       return (*_callback)( std::forward< Args >( arg )... );
     }
-    // if requred impl assign / copy .. blah blah blah ..
   private:
     std::shared_ptr< callback_type > _callback;
   };

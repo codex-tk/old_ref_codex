@@ -34,6 +34,8 @@ add_executable( codex.test
   test_chrono.cpp
   test_buffer.cpp
   test_handler.cpp
+  test_base64.cpp
+  test_string.cpp
 )
 
 target_link_libraries( codex.test

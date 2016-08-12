@@ -41,7 +41,9 @@ set( HEADERS
     include/codex/allocator.hpp
     include/codex/buffer/ctrl_blk.hpp
     include/codex/buffer/shared_blk.hpp
-    include/codex/time/convenience.hpp
+    include/codex/convenience/time.hpp
+    include/codex/convenience/base64.hpp
+    include/codex/convenience/crc32.hpp
 )
 
 set( SRCS
@@ -50,7 +52,9 @@ set( SRCS
     src/allocator.cpp
     src/buffer/ctrl_blk.cpp
     src/buffer/shared_blk.cpp
-    src/time/convenience.cpp
+    src/convenience/time.cpp
+    src/convenience/base64.cpp
+    src/convenience/crc32.cpp
     )
 
   add_library( codex STATIC ${HEADERS} ${SRCS} )

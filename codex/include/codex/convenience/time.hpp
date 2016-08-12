@@ -1,7 +1,7 @@
 /*!
  */
-#ifndef __codex_time_convenience_h__
-#define __codex_time_convenience_h__
+#ifndef __codex_convenience_time_h__
+#define __codex_convenience_time_h__ 
 
 #include <codex/codex.hpp>
 
