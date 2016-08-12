@@ -73,4 +73,6 @@ TEST( string ,trim ){
   codex::string::rtrim< std::string >( src , "ab" );
   gprintf( src );
   ASSERT_STREQ( src.c_str() , "  trim" );
+
+  gprintf( codex::string::format( "fmt %d %s" , 88 , "test"));
 }

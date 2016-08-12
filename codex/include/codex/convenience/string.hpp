@@ -5,6 +5,9 @@
 
 #include <string>
 #include <vector>
+#include <cstdarg>
+
+#include <codex/codex.hpp>
 
 namespace codex {
 
@@ -116,6 +119,19 @@ namespace codex {
       msg.resize(pos);
     }
 
+    static std::string format( const char* fmt , ... ) {
+      char buf[4096] = { 0 , };
+      va_list args;
+      va_start( args , fmt );
+#if defined( __codex_win32__ )
+      int ret = vsnprintf_s( buf , 4095 , fmt, args );
+#else
+      int ret = vsnprintf( buf , 4095 , fmt , args );
+#endif
+      va_end( args );
+      if ( ret < 0 ) ret = 0;
+      return std::string( buf , ret );
+    }
   };
 
 }
