@@ -4,6 +4,7 @@
 #define __codex_handler_h__
 
 #include <memory>
+#include <codex/next_prop_injection.hpp>
 
 namespace codex {
 
@@ -23,20 +24,20 @@ namespace codex {
   public:
     template < class Callback >
     static std::shared_ptr< callback > wrap( Callback&& c0 ){
-      class callback0 : public callback{
-        public:
-          callback0( Callback&& c ) 
-            : _callback( std::forward<Callback>( c ) ){
-          }
-          virtual ~callback0( void ) {
-          }
-          virtual R operator()( Args&&... arg ) {
-            return _callback( std::forward< Args >(arg)... );  
-          }
-        private:
-          Callback _callback;
+      class callback_impl : public callback{
+      public:
+        callback_impl( Callback&& c ) 
+          : _callback( std::forward<Callback>( c ) ){
+        }
+        virtual ~callback_impl( void ) {
+        }
+        virtual R operator()( Args&&... arg ) {
+          return _callback( std::forward< Args >(arg)... );  
+        }
+      private:
+        Callback _callback;
       };
-      return std::make_shared< callback0 >( std::forward< Callback >( c0 )); 
+      return std::make_shared< callback_impl >( std::forward< Callback >( c0 )); 
     }
   };
 
@@ -66,6 +67,39 @@ namespace codex {
     }
   private:
     std::shared_ptr< callback_type > _callback;
+  };
+
+  template < class Signature >
+  class callback0;
+
+  template < class R , class ...Args >
+  class callback0< R ( Args... ) > {
+  public:
+    callback0( void ) : _next( nullptr ) {}
+    virtual ~callback0( void ) = default;
+    virtual R operator()( Args&&... arg ) = 0; 
+    callback0* next( void ) { return _next;}
+    callback0* next( callback0* n ) { std::swap( _next , n ); return n; }
+  private:
+    callback0* _next;
+  public:
+    template < class Callback >
+    static callback0* wrap( Callback&& c0 ){
+      class callback_impl : public callback0{
+      public:
+        callback_impl( Callback&& c ) 
+          : _callback( std::forward<Callback>( c ) ){
+        }
+        virtual ~callback_impl( void ) {
+        }
+        virtual R operator()( Args&&... arg ) {
+          return _callback( std::forward< Args >(arg)... );  
+        }
+      private:
+        Callback _callback;
+      };
+      return new callback_impl( std::forward< Callback >( c0 )); 
+    }
   };
 }
 

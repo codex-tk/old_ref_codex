@@ -36,6 +36,9 @@ add_executable( codex.test
   test_handler.cpp
   test_base64.cpp
   test_string.cpp
+  test_loop.cpp
+  test_udp.cpp
+  test_variadic.cpp
 )
 
 target_link_libraries( codex.test

@@ -44,6 +44,9 @@ set( HEADERS
     include/codex/convenience/time.hpp
     include/codex/convenience/base64.hpp
     include/codex/convenience/crc32.hpp
+    include/codex/handler.hpp
+    include/codex/next_prop_injection.hpp
+    include/codex/loop.hpp
 )
 
 set( SRCS
@@ -55,6 +58,7 @@ set( SRCS
     src/convenience/time.cpp
     src/convenience/base64.cpp
     src/convenience/crc32.cpp
+    src/loop.cpp
     )
 
   add_library( codex STATIC ${HEADERS} ${SRCS} )

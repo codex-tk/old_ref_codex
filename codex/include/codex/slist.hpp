@@ -5,11 +5,12 @@
 
 namespace codex {
 
-  /**
+ /**
    */
   template < class T >
   class slist{
   public:
+    
     ///
     slist( void );
     ///

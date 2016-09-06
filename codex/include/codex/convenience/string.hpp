@@ -44,6 +44,20 @@ namespace codex {
       return splitvec;
     }
 
+    template < class String >
+    static std::vector< String > split( const String& msg 
+        , const String& sep , const int n )
+    {
+      // todo
+    }
+
+    template < class String >
+    static std::vector< String > rsplit( const String& msg 
+        , const String& sep , const int n )
+    {
+      // todo
+    }
+
     static std::string hex( const void* ptr , int sz ) {
       static const char _hex[] = "0123456789abcdef";
       const char* inptr = static_cast< const char* >(ptr); 
@@ -123,11 +137,7 @@ namespace codex {
       char buf[4096] = { 0 , };
       va_list args;
       va_start( args , fmt );
-#if defined( __codex_win32__ )
-      int ret = vsnprintf_s( buf , 4095 , fmt, args );
-#else
       int ret = vsnprintf( buf , 4095 , fmt , args );
-#endif
       va_end( args );
       if ( ret < 0 ) ret = 0;
       return std::string( buf , ret );
