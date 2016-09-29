@@ -47,6 +47,7 @@ set( HEADERS
     include/codex/handler.hpp
     include/codex/next_prop_injection.hpp
     include/codex/loop.hpp
+    include/codex/mux/context.hpp
 )
 
 set( SRCS
@@ -59,6 +60,7 @@ set( SRCS
     src/convenience/base64.cpp
     src/convenience/crc32.cpp
     src/loop.cpp
+    src/mux/context.cpp
     )
 
   add_library( codex STATIC ${HEADERS} ${SRCS} )
