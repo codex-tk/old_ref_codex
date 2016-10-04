@@ -39,6 +39,7 @@ add_executable( codex.test
   test_loop.cpp
   test_udp.cpp
   test_variadic.cpp
+  test_object_pool.cpp
 )
 
 target_link_libraries( codex.test
