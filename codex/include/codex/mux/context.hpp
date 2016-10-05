@@ -10,14 +10,17 @@ namespace codex { namespace mux {
   class interest{
   public:
     enum events {
-      k_ev_read = 0x01 ,
-      K_ev_write = 0x02 , 
+      k_read = 0x01 ,
+      k_write = 0x02 , 
     };
   public:
     interest( void );
     interest( int ev );
 
-    bool check( const interest::events e );
+    interest( const interest& rhs );
+    interest& operator=( const interest& rhs );
+
+    bool check( const interest::events e ) const;
     void set( const interest::events e );
     void clear( const interest::events e );
 
@@ -27,20 +30,29 @@ namespace codex { namespace mux {
     int _flags;
   };
 
-  class context;
-
-  typedef void (*callback)( context* ctx , const mux::interest& intr ); 
-
-  class context{
+  template < class Handler >
+  class basic_context{
   public:
-    context( void );
-    void handler( callback handler ) ;
-    mux::interest& interest( void );
-    void operator()( const mux::interest& intr );
+    basic_context( void ) {
+    }
+    void handler( const Handler handler ){
+      _handler = handler;
+    }
+    mux::interest& interest( void ){
+      return _interest;
+    }
+    void operator()( const mux::interest& intr ){
+      _handler(this,intr);
+    }
   private:
-    callback _handler;
+    Handler _handler;
     mux::interest _interest;
   };
+
+  typedef void (*callback)( void* ctx , const mux::interest& intr ); 
+
+  typedef basic_context< callback > context;
+
 
 }}
 

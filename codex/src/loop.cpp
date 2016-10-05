@@ -11,10 +11,12 @@ namespace codex {
   void loop::post0( loop::operation_type* op ) {
     std::lock_guard< std::mutex > guard( _lock );
     _ops.add_tail( op );
+    _mux.notify();
   }
 
   void loop::run( void ) {
     _tid = std::this_thread::get_id();
+    _mux.wait( std::chrono::milliseconds(-1));
     codex::slist< loop::operation_type > drain_ops;
     do {
       std::lock_guard< std::mutex > guard( _lock );
@@ -31,5 +33,9 @@ namespace codex {
 
   bool loop::in_loop( void ) {
     return _tid == std::this_thread::get_id();
+  }
+
+  codex::mux::implementation& loop::mux( void ){  
+    return _mux;
   }
 }

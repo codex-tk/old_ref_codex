@@ -5,8 +5,11 @@
 
 #include <codex/handler.hpp>
 #include <codex/slist.hpp>
+#include <codex/mux/mux.hpp>
+
 #include <mutex>
 #include <thread>
+
 
 namespace codex {
 
@@ -36,10 +39,14 @@ namespace codex {
     void run( void );
 
     bool in_loop( void );
+
+    codex::mux::implementation& mux( void );
   private:
     std::mutex _lock;
     codex::slist< operation_type > _ops; 
+
     std::thread::id _tid;
+    codex::mux::implementation _mux;
   };
 
 }

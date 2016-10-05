@@ -19,10 +19,10 @@ else()
     )
   else()
     set( PLATFORM_DEPEND_HEADERS
-
+      include/codex/mux/epoll.hpp
     )
     set( PLATFORM_DEPEND_SRCS
-
+      src/mux/epoll.cpp
     )
   endif()
 	  set( PLATFORM_DEPEND_HEADERS
@@ -48,6 +48,9 @@ set( HEADERS
     include/codex/next_prop_injection.hpp
     include/codex/loop.hpp
     include/codex/mux/context.hpp
+    include/codex/mux/mux.hpp
+    include/codex/ip/address.hpp
+    ${PLATFORM_DEPEND_HEADERS}
 )
 
 set( SRCS
@@ -61,6 +64,7 @@ set( SRCS
     src/convenience/crc32.cpp
     src/loop.cpp
     src/mux/context.cpp
+    ${PLATFORM_DEPEND_SRCS}
     )
 
   add_library( codex STATIC ${HEADERS} ${SRCS} )

@@ -13,7 +13,14 @@ namespace codex { namespace mux {
     _flags = ev;
   }
 
-  bool interest::check( interest::events e ){
+  interest::interest( const interest& rhs ) 
+    : _flags( rhs._flags ){}
+
+  interest& interest::operator=( const interest& rhs ){
+    _flags = rhs._flags;
+    return *this;
+  }
+  bool interest::check( interest::events e ) const {
     return _flags & static_cast<int>(e);
   }
 
@@ -23,7 +30,6 @@ namespace codex { namespace mux {
 
   void interest::clear( interest::events e ){
     _flags &= ~static_cast<int>(e);
-    _flags & static_cast<int>(e);
   }
 
   uint16_t interest::lib_flags( void ) const {
@@ -32,24 +38,6 @@ namespace codex { namespace mux {
   
   void interest::lib_flags( const uint16_t d ) {
     _flags = (d << 16) | (_flags & 0xffff);
-  }
-
-  context::context( void )
-    : _handler(nullptr)
-  {
-  }
-
-  void context::handler( mux::callback handler ){
-    _handler = handler;
-  }
-
-  mux::interest& context::interest( void ) {
-    return _interest;
-  }
-  
-  void context::operator()( const mux::interest& i ) {
-    if ( _handler )
-      _handler(this , i);
   }
 
 }}

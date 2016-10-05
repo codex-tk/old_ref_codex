@@ -28,6 +28,35 @@ if (Boost_FOUND)
   include_directories (SYSTEM ${Boost_INCLUDE_DIR})
 endif()
 
+if ( MSVC )
+  set( PLATFORM_DEPEND_HEADERS
+
+    )
+  set( PLATFORM_DEPEND_SRCS
+
+    )
+else()
+  if ( APPLE )
+    set( PLATFORM_DEPEND_HEADERS
+
+      )
+    set( PLATFORM_DEPEND_SRCS
+
+      )
+  else()
+    set( PLATFORM_DEPEND_HEADERS
+      )
+    set( PLATFORM_DEPEND_SRCS
+      test_epoll.cpp
+      )
+  endif()
+  set( PLATFORM_DEPEND_HEADERS
+    ${PLATFORM_DEPEND_HEADERS}
+    )
+  set( PLATFORM_DEPEND_SRCS
+    ${PLATFORM_DEPEND_SRCS}
+    )
+endif()
 add_executable( codex.test
 	test_codex.cpp
 	test_diag.cpp
@@ -40,6 +69,8 @@ add_executable( codex.test
   test_udp.cpp
   test_variadic.cpp
   test_object_pool.cpp
+  test_address.cpp
+  ${PLATFORM_DEPEND_SRCS}
 )
 
 target_link_libraries( codex.test
