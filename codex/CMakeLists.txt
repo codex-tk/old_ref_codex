@@ -47,7 +47,7 @@ set( HEADERS
     include/codex/handler.hpp
     include/codex/next_prop_injection.hpp
     include/codex/loop.hpp
-    include/codex/mux/context.hpp
+    include/codex/mux/interest.hpp
     include/codex/mux/mux.hpp
     include/codex/ip/address.hpp
     ${PLATFORM_DEPEND_HEADERS}
@@ -63,7 +63,7 @@ set( SRCS
     src/convenience/base64.cpp
     src/convenience/crc32.cpp
     src/loop.cpp
-    src/mux/context.cpp
+    src/mux/interest.cpp
     ${PLATFORM_DEPEND_SRCS}
     )
 

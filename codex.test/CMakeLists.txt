@@ -22,7 +22,7 @@ else()
 	endif()
 endif()
 
-find_package (Boost 1.61.0 REQUIRED COMPONENTS system date_time regex )
+find_package (Boost 1.55.0 REQUIRED COMPONENTS system date_time regex )
 
 if (Boost_FOUND)
   include_directories (SYSTEM ${Boost_INCLUDE_DIR})

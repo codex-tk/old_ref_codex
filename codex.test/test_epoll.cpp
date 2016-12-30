@@ -14,7 +14,7 @@ TEST( epoll , notify ){
       });
 
   for ( int i = 0 ; i < 5 ; ++i ) {
-    ASSERT_EQ( ep.wait( std::chrono::milliseconds(-1)) , 1 );
+    ASSERT_EQ( ep.wait( std::chrono::milliseconds(-1) ) , 1 );
   }
   thr.join();
 }
@@ -22,17 +22,8 @@ TEST( epoll , notify ){
 namespace {
 
 struct context0 {
-  codex::mux::context ctx;
   int value;
 };
-
-static void test_context_callback( void* ctx , const codex::mux::interest& intr ) {
-  context0* c = codex::container_of( static_cast< codex::mux::context*>(ctx) 
-      , &context0::ctx );  
-  if ( intr.check( codex::mux::interest::k_read )){
-    c->value += 1;
-  }
-}
 
 }
 
@@ -41,10 +32,16 @@ TEST( epoll , ev ) {
   int p[2];
   pipe(p);
   context0 c;
-  c.ctx.interest().set( codex::mux::interest::k_read );
-  c.ctx.handler( &test_context_callback );
   c.value = 0;
-  ep.bind( p[0] , &(c.ctx) );
+  codex::mux::interest interest;
+  interest.set( codex::mux::interest::k_read );
+  codex::mux::completion_handler* handler 
+    = codex::mux::completion_handler::wrap( [&c]( const codex::mux::interest& i ) {
+          if ( i.check( codex::mux::interest::k_read )){
+            c.value += 1; 
+          }
+        });
+  ep.bind( p[0] , interest ,  handler );
 
   ASSERT_EQ( ep.wait( std::chrono::milliseconds(20)) , 0 );
   ASSERT_EQ( ep.wait( std::chrono::milliseconds(20)) , 0 );
@@ -60,4 +57,6 @@ TEST( epoll , ev ) {
 
   ASSERT_EQ( ep.wait( std::chrono::milliseconds(20)) , 0 );
   ASSERT_EQ( ep.wait( std::chrono::milliseconds(20)) , 0 );
+
+  delete handler;
 }

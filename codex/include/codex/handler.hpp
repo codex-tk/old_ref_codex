@@ -22,20 +22,39 @@ namespace codex {
     virtual ~callback( void ) = default;
     virtual R operator()( Args&&... arg ) = 0; 
   public:
+    
     template < class Callback >
-    static std::shared_ptr< callback > wrap( Callback&& c0 ){
+    static callback* wrap( Callback&& c0 ){
       class callback_impl : public callback{
-      public:
-        callback_impl( Callback&& c ) 
-          : _callback( std::forward<Callback>( c ) ){
-        }
-        virtual ~callback_impl( void ) {
-        }
-        virtual R operator()( Args&&... arg ) {
-          return _callback( std::forward< Args >(arg)... );  
-        }
-      private:
-        Callback _callback;
+        public:
+          callback_impl( Callback&& c ) 
+            : _callback( std::forward<Callback>( c ) ){
+            }
+          virtual ~callback_impl( void ) {
+          }
+          virtual R operator()( Args&&... arg ) {
+            return _callback( std::forward< Args >(arg)... );  
+          }
+        private:
+          Callback _callback;
+      };
+      return new callback_impl( std::forward< Callback >( c0 ));
+    }
+
+    template < class Callback >
+    static std::shared_ptr< callback > wrap_shared( Callback&& c0 ){
+      class callback_impl : public callback{
+        public:
+          callback_impl( Callback&& c ) 
+            : _callback( std::forward<Callback>( c ) ){
+            }
+          virtual ~callback_impl( void ) {
+          }
+          virtual R operator()( Args&&... arg ) {
+            return _callback( std::forward< Args >(arg)... );  
+          }
+        private:
+          Callback _callback;
       };
       return std::make_shared< callback_impl >( std::forward< Callback >( c0 )); 
     }

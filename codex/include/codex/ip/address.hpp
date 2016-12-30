@@ -122,6 +122,7 @@ namespace codex { namespace ip {
 
     static address from_ip( const char* ip , const int port ){
       struct sockaddr_in addr;
+      memset( &addr , 0x00 , sizeof( addr ));
       addr.sin_family = AF_INET;
       addr.sin_addr.s_addr = inet_addr(ip);
       addr.sin_port = htons( port );
